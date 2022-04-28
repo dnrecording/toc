@@ -12,12 +12,14 @@ import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
 import MenuIcon from "@material-ui/icons/Menu";
 import Card from '@mui/material/Card';
-import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
+import { FaWrench, FaBookOpen, FaIndustry, FaPaintBrush } from 'react-icons/fa';
+import { MdScience, MdBusinessCenter, MdSettingsInputAntenna, MdDraw } from 'react-icons/md';
+import { RiPlantFill, RiBankFill } from 'react-icons/ri';
+import { AiFillMedicineBox } from 'react-icons/ai';
+import TextField from '@mui/material/TextField';
 
 const style = {
   position: 'absolute',
@@ -71,8 +73,8 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(3)
     , marginTop: 175
     , marginLeft: -150
-    , marginRight: 200
-  }
+    , marginRight: 200,
+  },
 }));
 
 export default function Home() {
@@ -101,25 +103,26 @@ export default function Home() {
   const [degree, setDegree] = React.useState({});
   const [whyApply, setWhyApply] = React.useState({});
 
+  const [searchValue, setsearchValue] = useState("");
   const [menuState, setMenuState] = React.useState(0);
 
-  // const getData = () => {
-  //   fetch("School of Engineering.json", {
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Accept: "application/json",
-  //     },
-  //   })
-  //     .then(function (response) {
-  //       return response.json();
-  //     })
-  //     .then(function (myJson) {
-  //       setData(myJson);
-  //     });
-  // };
-  // useEffect(() => {
-  //   getData();
-  // }, []);
+  const getData = () => {
+    fetch("School of Engineering.json", {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    })
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (myJson) {
+        setData(myJson);
+      });
+  };
+  useEffect(() => {
+    getData();
+  }, []);
 
   const fetchData = (index) => {
     setMenuState(index);
@@ -189,13 +192,17 @@ export default function Home() {
 
   const handleCloseModal = () => setOpenModal(false);
 
+  function searchMajor() {
+    console.log(document.getElementById("textsearch").value);
+    setsearchValue(document.getElementById("textsearch").value);
+  }
+
   return (
     <div className={classes.root}>
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar style={{ height: 120 }}>
+        <Toolbar style={{ height: 120, backgroundColor: "#fe7c1c"}}>
           <IconButton
-            color="inherit"
             aria-label="open drawer"
             edge="start"
             onClick={toggleDrawer}
@@ -205,7 +212,7 @@ export default function Home() {
           </IconButton>
 
           <div style={{ marginLeft: 130 }}>
-            <Typography variant="h6" noWrap style={{ fontSize: 40 }}>
+            <Typography variant="h6" noWrap style={{ fontSize: 40}}>
               คณะ
             </Typography>
           </div>
@@ -232,11 +239,90 @@ export default function Home() {
       >
         <div className={classes.toolbar} />
         <Divider />
+        <div className="searchForm">
+            <TextField id="textsearch" label="ค้นหา สาขาวิชา" variant="outlined" style={{marginTop: "15px", marginLeft: "20px", width: "300px", borderColor: "#fe7c1c"}} onChange = {searchMajor}/>
+          </div>
         <List>
           {["วิศวกรรมศาสตร์", "สถาปัตยกรรม ศิลปะและการออกแบบ", "ครุศาสตร์อุตสาหกรรมและเทคโนโลยี", "เทคโนโลยีการเกษตร", "วิทยาศาสตร์", "อุตสาหกรรมอาหาร", "เทคโนโลยีสารสนเทศ", "บริหารธุรกิจ", "ศิลปศาสตร์", "แพทยศาสตร์", "วิทยาศาสตร์ประยุกต์และการบริหารธุรกิจ"].map((text, index) => (
             <ListItem button key={text} onClick={(e) => fetchData(index, e)}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              <ListItemIcon style={{fontSize: "30px"}}>
+                {index === 0 ?
+                  <>
+                    {menuState === index ?
+                      <FaWrench style={{color: "#000000"}}/>
+                    : <FaWrench />}
+                  </>
+                : ""}
+                {index === 1 ?
+                  <>
+                    {menuState === index ?
+                      <MdDraw style={{color: "#000000"}}/>
+                    : <MdDraw />}
+                  </>
+                : ""}
+                {index === 2 ?
+                  <>
+                    {menuState === index ?
+                      <FaBookOpen style={{color: "#000000"}}/>
+                    : <FaBookOpen />}
+                  </>
+                : ""}
+                {index === 3 ?
+                  <>
+                    {menuState === index ?
+                      <RiPlantFill style={{color: "#000000"}}/>
+                    : <RiPlantFill />}
+                  </>
+                : ""}
+                {index === 4 ?
+                  <>
+                    {menuState === index ?
+                      <MdScience style={{color: "#000000"}}/>
+                    : <MdScience />}
+                  </>
+                : ""}
+                {index === 5 ?
+                  <>
+                    {menuState === index ?
+                      <FaIndustry style={{color: "#000000"}}/>
+                    : <FaIndustry />}
+                  </>
+                : ""}
+                {index === 6 ?
+                  <>
+                    {menuState === index ?
+                      <MdSettingsInputAntenna style={{color: "#000000"}}/>
+                    : <MdSettingsInputAntenna />}
+                  </>
+                : ""}
+                {index === 7 ?
+                  <>
+                    {menuState === index ?
+                      <MdBusinessCenter style={{color: "#000000"}}/>
+                    : <MdBusinessCenter />}
+                  </>
+                : ""}
+                {index === 8 ?
+                  <>
+                    {menuState === index ?
+                      <FaPaintBrush style={{color: "#000000"}}/>
+                    : <FaPaintBrush />}
+                  </>
+                : ""}
+                {index === 9 ?
+                  <>
+                    {menuState === index ?
+                      <AiFillMedicineBox style={{color: "#000000"}}/>
+                    : <AiFillMedicineBox />}
+                  </>
+                : ""}
+                {index === 10 ?
+                  <>
+                    {menuState === index ?
+                      <RiBankFill style={{color: "#000000"}}/>
+                    : <RiBankFill />}
+                  </>
+                : ""}
               </ListItemIcon>
               {menuState === index ?
                 <ListItemText disableTypography
@@ -249,17 +335,21 @@ export default function Home() {
         </List>
       </Drawer>
       <main className={classes.content}>
-      <div class="grid grid-cols-2">
+      <div className="grid grid-cols-2">
         {data && data.length ?
           data.map((item, i) => (
-            <Card sx={cardStyle} onClick={(e) => handleOpenModal(i, e)}>
-              <Typography id="modal-modal-title" variant="h6" component="h2" style={{ fontSize: 30 }}>
-                {item.Faculty}
-              </Typography>
-              <Typography id="modal-modal-title" variant="h6" component="h2" style={{ fontSize: 20 }}>
-                {item.Major}
-              </Typography>
-            </Card>
+            <>
+              {item.Major.includes(searchValue) ?
+                <Card sx={cardStyle} onClick={(e) => handleOpenModal(i, e)}>
+                  <Typography id="modal-modal-title" variant="h6" component="h2" style={{ fontSize: 30 }}>
+                    {item.Faculty}
+                  </Typography>
+                  <Typography id="modal-modal-title" variant="h6" component="h2" style={{ fontSize: 20 }}>
+                    {item.Major}
+                  </Typography>
+                </Card>
+              : ""}
+            </>
           ))
           : ""}
         <Modal
