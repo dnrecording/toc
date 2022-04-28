@@ -20,6 +20,7 @@ import { MdScience, MdBusinessCenter, MdSettingsInputAntenna, MdDraw } from 'rea
 import { RiPlantFill, RiBankFill } from 'react-icons/ri';
 import { AiFillMedicineBox } from 'react-icons/ai';
 import TextField from '@mui/material/TextField';
+import { height } from "@mui/system";
 
 const style = {
   position: 'absolute',
@@ -45,11 +46,11 @@ const useStyles = makeStyles(theme => ({
     display: "flex"
   },
   appBar: {
-    zIndex: theme.zIndex.drawer + 1
+    zIndex: theme.zIndex.drawer + 1,
   },
   drawer: {
     flexShrink: 0,
-    width: drawerWidth
+    width: drawerWidth,
   },
   drawerPaper: {
     width: drawerWidth
@@ -101,6 +102,8 @@ export default function Home() {
   const [major, setMajor] = React.useState({});
   const [fee, setFee] = React.useState({});
   const [degree, setDegree] = React.useState({});
+  const [campus, setCampus] = React.useState({});
+  const [inter, setInter] = React.useState({});
   const [whyApply, setWhyApply] = React.useState({});
 
   const [searchValue, setsearchValue] = useState("");
@@ -187,6 +190,8 @@ export default function Home() {
     setMajor(data[i].Major);
     setFee(data[i].Fee);
     setDegree(data[i].Degree);
+    setCampus(data[i].Campus);
+    setInter(data[i].IsInter);
     setWhyApply(data[i].WhyApply);
   }
 
@@ -201,7 +206,7 @@ export default function Home() {
     <div className={classes.root}>
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar style={{ height: 120, backgroundColor: "#fe7c1c"}}>
+        <Toolbar style={{ height: 100, backgroundColor: "#fe7c1c"}}>
           <IconButton
             aria-label="open drawer"
             edge="start"
@@ -237,8 +242,7 @@ export default function Home() {
         open={open}
         onClose={toggleDrawer}
       >
-        <div className={classes.toolbar} />
-        <Divider />
+        <Divider style={{marginTop: "40px"}}/>
         <div className="searchForm">
             <TextField id="textsearch" label="ค้นหา สาขาวิชา" variant="outlined" style={{marginTop: "15px", marginLeft: "20px", width: "300px", borderColor: "#fe7c1c"}} onChange = {searchMajor}/>
           </div>
@@ -335,6 +339,7 @@ export default function Home() {
         </List>
       </Drawer>
       <main className={classes.content}>
+      <img src="kmitl_park.jpg" style={{position: "fixed", marginTop: "-400px", opacity: "60%"}}></img>
       <div className="grid grid-cols-2">
         {data && data.length ?
           data.map((item, i) => (
@@ -360,27 +365,47 @@ export default function Home() {
         >
           <Card sx={style}>
             <Typography id="modal-modal-title" variant="h6" component="h2" style={{ fontSize: 40 }}>
-              {faculty}
+              {major}
             </Typography>
             <div style={{ display: "flex", flexDirection: "row" }}>
-              <Typography id="modal-modal-description" style={{ marginTop: '10px', fontWeight: 600, fontSize: 18 }}>
+              <Typography id="modal-modal-description" style={{ marginTop: '5px', fontWeight: 600, fontSize: 18 }}>
                 วุฒิการศึกษา :
               </Typography>
-              <Typography id="modal-modal-description" style={{ marginTop: '10px', marginLeft: '10px', fontSize: 18 }}>
+              <Typography id="modal-modal-description" style={{ marginTop: '5px', marginLeft: '10px', fontSize: 18 }}>
                 {degree}
               </Typography>
             </div>
-            <Typography id="modal-modal-description" style={{ marginTop: '20px', fontWeight: 600, fontSize: 18 }}>
+            <div style={{ display: "flex", flexDirection: "row" }}>
+              <Typography id="modal-modal-description" style={{ marginTop: '15px', fontWeight: 600, fontSize: 18 }}>
+                วิทยาเขต :
+              </Typography>
+              <Typography id="modal-modal-description" style={{ marginTop: '15px', marginLeft: '10px', fontSize: 18 }}>
+                {campus === "KMITL" ?
+                  "ลาดกระบัง" 
+                : "ชุมพร"}
+              </Typography>
+            </div>
+            <div style={{ display: "flex", flexDirection: "row" }}>
+              <Typography id="modal-modal-description" style={{ marginTop: '15px', fontWeight: 600, fontSize: 18 }}>
+                หลักสูคร :
+              </Typography>
+              <Typography id="modal-modal-description" style={{ marginTop: '15px', marginLeft: '10px', fontSize: 18 }}>
+                {inter === "True" ?
+                  "อินเตอร์" 
+                : "ปกติ"}
+              </Typography>
+            </div>
+            <Typography id="modal-modal-description" style={{ marginTop: '15px', fontWeight: 600, fontSize: 18 }}>
               ทำไมต้องเรียน {degree} {major} ที่ สจล. ?
             </Typography>
             <Typography id="modal-modal-description" style={{ marginTop: '5px', marginLeft: '10px', fontSize: 18 }}>
               {whyApply}
             </Typography>
             <div style={{ display: "flex", flexDirection: "row" }}>
-              <Typography id="modal-modal-description" style={{ marginTop: '20px', fontWeight: 600, fontSize: 18 }}>
+              <Typography id="modal-modal-description" style={{ marginTop: '15px', fontWeight: 600, fontSize: 18 }}>
                 ค่าธรรมเนียมการศึกษา :
               </Typography>
-              <Typography id="modal-modal-description" style={{ marginTop: '20px', marginLeft: '10px', fontSize: 18 }}>
+              <Typography id="modal-modal-description" style={{ marginTop: '15px', marginLeft: '10px', fontSize: 18 }}>
                 {fee} บาท
               </Typography>
             </div>
