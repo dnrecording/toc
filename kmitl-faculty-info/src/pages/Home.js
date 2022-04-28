@@ -69,7 +69,9 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing(3)
-    , marginTop: 150
+    , marginTop: 175
+    , marginLeft: -150
+    , marginRight: 200
   }
 }));
 
@@ -101,23 +103,23 @@ export default function Home() {
 
   const [menuState, setMenuState] = React.useState(0);
 
-  const getData = () => {
-    fetch("School of Engineering.json", {
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-    })
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (myJson) {
-        setData(myJson);
-      });
-  };
-  useEffect(() => {
-    getData();
-  }, []);
+  // const getData = () => {
+  //   fetch("School of Engineering.json", {
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Accept: "application/json",
+  //     },
+  //   })
+  //     .then(function (response) {
+  //       return response.json();
+  //     })
+  //     .then(function (myJson) {
+  //       setData(myJson);
+  //     });
+  // };
+  // useEffect(() => {
+  //   getData();
+  // }, []);
 
   const fetchData = (index) => {
     setMenuState(index);
@@ -154,7 +156,7 @@ export default function Home() {
       case 9:
         file = "Faculty of Medicine";
         break;
-      case 9:
+      case 10:
         file = "Faculty of Applied Science and Business Administration";
         break;
       default :
@@ -202,13 +204,13 @@ export default function Home() {
             <MenuIcon />
           </IconButton>
 
-          <div style={{ marginLeft: 125 }}>
+          <div style={{ marginLeft: 130 }}>
             <Typography variant="h6" noWrap style={{ fontSize: 40 }}>
               คณะ
             </Typography>
           </div>
 
-          <div style={{ marginLeft: "47vw" }}>
+          <div style={{ marginLeft: "43vw" }}>
 
             <Typography variant="h6" noWrap style={{ fontSize: 40 }}>
               สาขาวิชา
@@ -247,6 +249,7 @@ export default function Home() {
         </List>
       </Drawer>
       <main className={classes.content}>
+      <div class="grid grid-cols-2">
         {data && data.length ?
           data.map((item, i) => (
             <Card sx={cardStyle} onClick={(e) => handleOpenModal(i, e)}>
@@ -259,7 +262,6 @@ export default function Home() {
             </Card>
           ))
           : ""}
-
         <Modal
           open={openModal}
           onClose={handleCloseModal}
@@ -294,6 +296,7 @@ export default function Home() {
             </div>
           </Card>
         </Modal>
+        </div>
       </main>
     </div>
   );
